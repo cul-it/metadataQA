@@ -78,6 +78,11 @@ This downloads all the MODS/XML data from the OAI feed at Florida State Universi
 $ python oaiharvest.py -m mods -o fsuoai.mods.xml -l https://fsu.digital.flvc.org/oai2
 ```
 
+An ecommons example 
+```
+python metadataQA/harvest/harvestOAI.py -m oai_dc -o ecommons.xml -s com_1813_2265 -l https://ecommons.cornell.edu/dspace-oai/request
+```
+
 #### Harvest DPLA feed
 
 You can pass your [DPLA API key](http://dp.la/info/developers/codex/policies/#get-a-key) to the script either using the -k flag or by setting it as an environmental variable DPLA_APIKEY.
