@@ -36,16 +36,16 @@ Because these scripts use new libraries*, and they change the original intent of
 
 ## Install
 
-This was all built/test on python 2.7.10. It needs tweaking for python 3. I'm working on it - the analysis files except MARC work on python 3. The harvester doesn't work for python3 yet - considering moving to requests library instead of urllib/urlopen, which requires more 2 to 3 conversion work. Or, if you find something that works for 3, you can add it and submit a pull request. Please.
+More expansive instructions on setting up python: [Python setup](https://github.com/cul-it/metadataQA/blob/master/python_setup.md)
 
-So, working with python 2.7:
+Quick instructions:
 
 1. Get this repository on your computer somehow. You can:
     1. change to file location where you want these scripts, then clone this git repository to your computer:
     ```
-    $ git clone https://github.com/cmh2166/metadataQA.git
+    $ git clone https://github.com/cul-it/metadataQA.git
     ```
-    1. download this repository to your computer from the [GitHub page](https://github.com/cmh2166/metadataQA) - use the 'Download Zip' button in bottom right corner. Move the zip file to the place you wish to have these scripts, then unzip.
+    1. download this repository to your computer from the [GitHub page](https://github.com/cul-it/metadataQA) - use the 'Download Zip' button in bottom right corner. Move the zip file to the place you wish to have these scripts, then unzip.
 2. once you've got the scripts on your computer, change to inside the metadataQA directory, and install the requirements:
 
 ```
