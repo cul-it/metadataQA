@@ -11,6 +11,9 @@ A set of metadata harvesting and analysis scripts, largely built off the model/s
 
 So please give any gratitude for these scripts to Mark Phillips, and any complaints to Christina.
 
+## Python setup
+[Help for getting your Python environment going.](https://github.com/cul-it/metadataQA/blob/master/python_setup.md)
+
 ## Warning(s)
 
 A huge project and presentation prompted me to finally collect and share these. However, these scripts were originally built usually at midnight with huge metadata projects/migrations looming where I didn't have the tools I needed to properly review metadata sets.
