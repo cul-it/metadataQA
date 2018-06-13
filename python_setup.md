@@ -16,18 +16,18 @@ $ Python 3.5.1
 ```
 Get pip: See this link: http://www.pyladies.com/blog/Get-Your-Mac-Ready-for-Python-Programming/ (scroll down to Install Pip section).
 
-Clone this repository (https://github.com/cul-it/sharedshelf-metadata.git) where you would like to keep it (for example, I keep it in a directory called 'Projects'), then in your shell / command line tool, change into the directory for this repository, then create a virtualenv with the Python version you prefer:
+Clone this repository (https://github.com/cul-it/metadataQA.git) where you would like to keep it (for example, I keep it in a directory called 'Projects'), then in your shell / command line tool, change into the directory for this repository, then create a virtualenv with the Python version you prefer:
 
 ```bash
-$ git clone --recursive https://github.com/cul-it/sharedshelf-metadata.git
+$ git clone https://github.com/cul-it/metadataQA.git
  ( output should show materials being copied/cloned to your local computer )
-$ cd ~/Projects/sharedshelf-metadata
+$ cd ~/Projects/metadataQA
 $ virtualenv venv
 ```
 If you want to specific a particular Python version that is not the default, use the following command instead:
 
 ```bash
-$ cd ~/Projects/sharedshelf-metadata
+$ cd ~/Projects/metadataQA
 $ virtualenv -p /usr/local/bin/python venv
 ```
 Where '/usr/local/bin/python' points to the response of 'which python' or 'which python3', etc.
