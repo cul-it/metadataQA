@@ -6,6 +6,8 @@ import json
 import re
 import csv
 import errno
+from pathlib import Path
+
 
 base_url = 'http://catalog.sharedshelf.artstor.org/'
 url_rest = '/assets?with_meta=true&limit=5000000'
@@ -66,7 +68,7 @@ def getCollections(cookies, proj_id):
     return(colls)
 
 
-def generateDataDump(cookies, colls, filename):
+def generateDataDump(cookies, colls, filename,single):
     total = 0
     output = {}
     for coll_id in colls:
@@ -90,27 +92,46 @@ def generateDataDump(cookies, colls, filename):
                     fields[field] = field
 
         # Grab SharedShelf metadata field values and store in output.
-        for n in range(len(assets)):
-            record_id = assets[n]['id']
-            output[record_id] = {}
-            total += 1
-            for field in assets[n]:
-                if field in fields:
-                    field_label = fields[field]
-                    output[record_id][field_label] = assets[n][field]
-                else:
-                    output[record_id][field] = assets[n][field]
-                    print("MISSING FIELD: " + field + ": " + data['assets'][n][field])
+        if single == True:
+            for n in range(len(assets)):
+                record_id = assets[n]['id']
+                output = {}
+                total += 1
+                for field in assets[n]:
+                    if field in fields:
+                        field_label = fields[field]
+                        output[field_label] = assets[n][field]
+                    else:
+                        output[field] = assets[n][field]
+                        print("MISSING FIELD: " + field + ": " + data['assets'][n][field])    
+    
+                itemfile = Path("data/%s/%s.json" % (coll_id,record_id))
+                Path("data/%s" % coll_id).mkdir(parents=True, exist_ok=True)
+                with open(itemfile, 'w+') as ofile:
+                    json.dump(output, ofile)
+                    ofile.close
 
-    if not os.path.exists(os.path.dirname(filename)) and os.path.dirname(filename):
-        try:
-            os.makedirs(os.path.dirname(filename))
-        except OSError as exc:
-            if exc.errno != errno.EEXIST:
-                raise
-    with open(filename, 'w') as ofile:
-        json.dump(output, ofile)
-    print("Wrote out %d records" % total)
+        else:
+            for n in range(len(assets)):
+                record_id = assets[n]['id']
+                output[record_id] = {}
+                total += 1
+                for field in assets[n]:
+                    if field in fields:
+                        field_label = fields[field]
+                        output[record_id][field_label] = assets[n][field]
+                    else:
+                        output[record_id][field] = assets[n][field]
+                        print("MISSING FIELD: " + field + ": " + data['assets'][n][field])
+            if not os.path.exists(os.path.dirname(filename)) and os.path.dirname(filename):
+                try:
+                    os.makedirs(os.path.dirname(filename))
+                except OSError as exc:
+                    if exc.errno != errno.EEXIST:
+                        raise
+            with open(filename, 'w') as ofile:
+                json.dump(output, ofile)
+            print("Wrote out %d records" % total)
 
 
 def generateMetadataDump(cookies, colls):
@@ -173,6 +194,9 @@ def main():
     parser.add_argument("-m", "--metadata", dest="metadata", default=False,
                         action="store_true", help="Return collated metadata \
                         label to SharedShelf API field codes dictionaries.")
+    parser.add_argument("--singles", dest="single", default=False,action="store_true",
+    help="Return items in invdividual files for use in json schema validation workflow")
+
     args = parser.parse_args()
 
     # Authenticating the User on the SharedShelf API.
@@ -180,7 +204,7 @@ def main():
 
     # Get All Projects/Collections in SharedShelf First.
     print("Writing metadata to data/metadata_fields.csv from SharedShelf.")
-
+    
     if args.metadata:
         colls = getCollections(cookies, None)
         output = generateMetadataDump(cookies, colls)
@@ -188,10 +212,15 @@ def main():
     else:
         if args.coll:
             spec_id = args.coll
+            if args.single:
+                single = True
+            else:
+                single = False
         else:
             spec_id = None
+            single = False
         colls = getCollections(cookies, spec_id)
-        generateDataDump(cookies, colls, args.filename)
+        generateDataDump(cookies, colls, args.filename,single)
 
 
 if __name__ == "__main__":
